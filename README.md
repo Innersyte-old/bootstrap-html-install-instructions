@@ -28,7 +28,13 @@ cd my-web-project
 npm init
 ```
 
-NPM will ask a series of questions (It is okay to accept the defaults) before creating a package.json file, which will contain all the details NPM needs, your information, dependencies, etc that the build project will need.
+NPM will ask a series of questions (It is okay to accept the defaults, except one - see below) before creating a package.json file, which will contain all the details NPM needs, your information, dependencies, etc that the build project will need.
+  
+When npm init asks for the entry point, which will default to index.js, enter
+
+```console
+entry point: (index.js) src/index.js
+```
   
 ## Step 3: Install Parcel
   
@@ -46,3 +52,36 @@ Bootstrap has a number of dependencies, so we'll start with those prior to addin
 npm install @popperjs/core
 npm install bootstrap
 ```
+
+# Step 4: Setting up your project files
+
+As a minimum, both Parcel and Bootstrap require two files for your index web page, index.html and index.js.  To keep everything tidy, we'll create a sub-folder called src and these two files.  Use the following templates to seed each files respectively.
+
+```console
+mkdir src
+cd src
+```
+
+Create the html file, index.html.
+
+```html
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <script src="./index.js"></script>
+  </body>
+</html>
+```
+
+Create the js file, index.js.
+
+```js
+// Import all plugins
+import * as bootstrap from 'bootstrap';
+```
+
+I am going to import everything from Bootstrap, but checkout their online documentation for more options [https://getbootstrap.com/docs/5.0/getting-started/javascript/](https://getbootstrap.com/docs/5.0/getting-started/javascript/).
