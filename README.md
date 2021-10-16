@@ -39,8 +39,10 @@ entry point: (index.js) src/index.js
 ## Step 3: Install Parcel
   
 ```console
-npm install --save-dev parcel
+npm install parcel-bundler
 ```
+
+If you follow the instructions on the Parcel website itself (i.e. npm install parcel), this will not work.  When you try to run a project, it will not compile index.js, rather it will treat it as a normal Javascript file.  Errors will be thrown such as when one tries to use import, which is not allowed in a regular web Javascript file.  Parcel-bundler is the correct package and designed to compile JS resources as part of the build.
 
 With Parcel installed, all the build and deployment tools are now available.  The next step is to setup Bootstrap.
 
@@ -82,6 +84,55 @@ Create the js file, index.js.
 ```js
 // Import all plugins
 import * as bootstrap from 'bootstrap';
+import "bootstrap/dist/css/bootstrap.css"; // Import precompiled Bootstrap css
 ```
 
 I am going to import everything from Bootstrap, but checkout their online documentation for more options [https://getbootstrap.com/docs/5.0/getting-started/javascript/](https://getbootstrap.com/docs/5.0/getting-started/javascript/).
+
+# Step 5: Create the CSS file (SCSS)
+
+Start by creating a new subfolder in the root called scss and create a file within it called custom.scss.
+
+```console
+mkdir scss
+cd scss
+```
+
+Now create the file custom.scss within the scss folder and copy the following text into it.  Save the file.
+
+```js
+// Custom.scss
+
+// Include any default variable overrides here (though functions won't be available)
+// Include all of bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+```
+
+Check out [https://getbootstrap.com/docs/5.0/customize/sass/#importing](https://getbootstrap.com/docs/5.0/customize/sass/#importing) for all possible scss options.
+
+# Step 6: Edit the package.json file adding scripts to run and build
+
+All the basic editing is complete.  The final step is to modify the package.json file with the commands necessary to build and run your bootstrap based projects.
+Back in the root folder edit package.json and add the following script declarations.
+
+```js
+"scripts": {
+  "dev": "parcel ./src/index.html",
+  "prebuild": "npx rimraf build",
+  "build": "parcel build --public-url ./ ./src/index.html --experimental-scope-hoisting --out-dir build"
+}
+```
+
+# Step 7: How to run and build your project
+
+Congratulations, you are now ready to run and/or build your project.  To run a dev copy of your project, use the following command:
+
+```console
+npm run dev
+```
+
+And to build your project, use the following command.  Run will automatically build a project and in all cases, the output of the build it saved to the folder called Dist found in the root directory of the project.
+
+```console
+npm run build
+```
